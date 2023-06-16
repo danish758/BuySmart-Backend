@@ -5,6 +5,7 @@ const stripe = require("stripe")(
 const Cart = require("../models/cartModal");
 const Products = require("../models/productsModal");
 
+// Redirecting to stripe's website for payment accepting
 const paymentIntent = asyncHandler(async (req, res) => {
   const cart = await Cart.find({ user: req.user.id });
   let products = [];
@@ -46,6 +47,9 @@ const paymentIntent = asyncHandler(async (req, res) => {
     res.status(500).json({ error: e.message });
   }
 });
+
+// Using stripe form on our website instead of redirecting to stripe's website
+
 const paymentSecret = asyncHandler(async (req, res) => {
   const PaymentIntent = await stripe.paymentIntents.create({
     amount: 1099,
